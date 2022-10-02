@@ -28,7 +28,15 @@ window.addEventListener("load", function() {
     }
 
     class Projectile {
-
+        constructor(game, x, y) {
+            this.game = game;
+            this.x = x;
+            this.y = y;
+            this.width = 10;
+            this.height = 3;
+            this.speed = 3;
+            this.markedForDeletion = false;
+        }
     }
 
     class Particle {
