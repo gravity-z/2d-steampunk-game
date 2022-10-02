@@ -67,5 +67,8 @@ window.addEventListener("load", function() {
             this.player.draw(context);
         }
     }
+
+    const game = new Game(canvas.width, canvas.height);
+
     
 });
