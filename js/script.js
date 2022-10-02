@@ -81,6 +81,7 @@ window.addEventListener("load", function() {
         }
 
         draw(context) {
+            context.fillStyle = 'black';
             context.fillRect(this.x, this.y, this.width, this.height);
         }
     }
