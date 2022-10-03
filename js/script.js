@@ -17,14 +17,12 @@ window.addEventListener("load", function() {
                 else if (e.key === ' ') {
                     this.game.player.shootTop();
                 }
-                console.log(this.game.keys);
             });
 
             window.addEventListener('keyup', e => {
                 if (this.game.keys.indexOf(e.key) > -1) {
                     this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
                 }
-                console.log(this.game.keys);
             });
         }
 
@@ -50,7 +48,7 @@ window.addEventListener("load", function() {
 
         draw(context) {
             context.fillStyle = 'yellow';
-            fillRect(this.x, this.y, this.width, this.height);
+            context.fillRect(this.x, this.y, this.width, this.height);
         }
     }
 
@@ -92,11 +90,17 @@ window.addEventListener("load", function() {
         draw(context) {
             context.fillStyle = 'black';
             context.fillRect(this.x, this.y, this.width, this.height);
+            this.projectiles.forEach(projectile => {
+                projectile.draw(context);
+            });
         }
 
         shootTop() {
-            this.projectiles.push(new Projectile(this.game, this.x, this.y));
-        }
+            if (this.game.ammo > 0) {
+                this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
+                this.game.ammo--;
+            }
+        } 
     }
 
     class Enemy {
@@ -122,6 +126,7 @@ window.addEventListener("load", function() {
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.keys = [];
+            this.ammo = 20;
         }
 
         update() {
