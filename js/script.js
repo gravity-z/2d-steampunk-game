@@ -14,6 +14,9 @@ window.addEventListener("load", function() {
                 ) && this.game.keys.indexOf(e.key) === -1) {
                     this.game.keys.push(e.key);
                 }
+                else if (e.key === ' ') {
+                    this.game.player.shootTop();
+                }
                 console.log(this.game.keys);
             });
 
@@ -64,6 +67,7 @@ window.addEventListener("load", function() {
             this.y = 100;
             this.speedY = 0;
             this.maxSpeed = 3;
+            this.projectiles = [];
         }
 
         update() {
@@ -78,11 +82,20 @@ window.addEventListener("load", function() {
             }
             
             this.y += this.speedY;
+
+            this.projectiles.forEach(projectile => {
+                projectile.update();
+            });
+            this.projectiles = this.projectiles.filter(projectile => !projectile.markedForDeletion);
         }
 
         draw(context) {
             context.fillStyle = 'black';
             context.fillRect(this.x, this.y, this.width, this.height);
+        }
+
+        shootTop() {
+            this.projectiles.push(new Projectile(this.game, this.x, this.y));
         }
     }
 
