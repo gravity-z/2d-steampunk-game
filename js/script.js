@@ -166,12 +166,12 @@ window.addEventListener("load", function() {
             context.font = this.fontSize + 'px ' + this.fontFamily;
             //score
             context.fillText('Score: ' + this.game.score, 20, 40);
-            // ammo
-            context.fillStyle = this.color;
-            
+            // ammo            
             for (let i = 0; i < this.game.ammo; i++) {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            // timer
+            
             // game over messages
             if (this.game.gameOver) {
                 context.textAlign = 'center';
@@ -214,9 +214,18 @@ window.addEventListener("load", function() {
             this.gameOver = false;
             this.score = 0;
             this.winningScore = 10;
+            this.gameTime = 0;
+            this.timeLimit = 5000;
         }
 
         update(deltaTime) {
+            if (!this.gameOver) {
+                this.gameTime += deltaTime;
+            }
+            if (this.gameTime > this.timeLimit) {
+                this.gameOver = true;
+            }
+
             this.player.update();
             if (this.ammoTimer > this.ammoInterval) {
                 if (this.ammo < this.maxAmmo) {
